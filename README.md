@@ -4,5 +4,11 @@ Here is an initial read me file. First make sure that you installed the packages
 - in the terminal field, click on the arrow downwards next to the + sign, click select default profile and choose a linux based one.
 
 Then you close VSCode, and open it again via a linux terminal. In the terminal field(if no shows run the c program) and configure git username and email.
+configure as follows:
+- git config user.name "Marleen Siebons"
+- git config user.email "m.s.j.siebons@student.utwente.nl"
+- check for no mistakes with cat .git/config
+
+And you can pull, commit and push :)
 
 
