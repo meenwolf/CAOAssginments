@@ -1,1 +1,2 @@
-# CAOAssginments
+# CAO Assginments
+Here is an initial read me file. You have to clone this repostery (I did it starting from the normal(windows) VSCode). Then you can open a linux based terminal, navigate using $cd repoPath$ to the repostery path. Then with $code .$  you can open VSCode. Now VSCode knows you want a linux based version of VSCode which you might need to download in VSCode as well. Then before you can run a C file, you need to install extentions:  C/C++, C/C++ Extention Pack and Code Runner. Also, in a linux based version of VSCode you might have to change settings such that a linux terminal is used as default(maybe this goes automatically, idk)
