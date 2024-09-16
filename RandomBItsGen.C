@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
+
 int main() {
+    srand(time(NULL)); 
     double r1= rand(); //will be a random number from 0 to 1
     printf("our random: %lf", r1);
     printf("we have r1 divided by randmax: %lf", r1/RAND_MAX);
