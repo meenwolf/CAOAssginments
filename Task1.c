@@ -15,3 +15,36 @@ that one should use actual strings to represent the data.
 is represented as arrays of bits.
 - Consider an efficient way to calculate and count the differences between the binary
 strings. */
+
+#include <stdio.h>
+
+// this function will calculate the hemming distance between 2 integers
+int calcHem(int a, int b) {
+    int x = a ^ b; 
+    // now need to calculate the amount of 1's in the binary representation of x
+    int d = 0;
+    // the length of an int is 32 bits
+    for (int i=0; i<32; i++) {
+        d += 1 & x;
+        x = x >> 1;
+    }
+    printf("hemming distance for %d and %d is %d.", a, b, d);
+    // this function seems to work correctly!
+}
+
+// this function asks for the user's input
+void askInput() {
+    int nStrings, stringLength, seed;
+    printf("How many strings should be generated?");
+    scanf("%d", &nStrings);
+    printf("How long should the strings be?");
+    scanf("%d", &stringLength);
+    printf("What seed should be used to generate the strings?");
+    scanf("%d", &seed);
+    printf("Input values were: number of strings = %d, of length = %d, with seed = %d.", nStrings, stringLength, seed);
+}
+
+int main() {
+    // do main stuff
+    calcHem(622, 827);
+}
