@@ -24,7 +24,7 @@ BitString alloc_bit_string(int L) {
     }
 
     if (restbits){
-        data[nbytes-1] >>= 8-restbits; // we zeropad on the left side, by shifting to the right since bits are random and not yet used
+        data[nbytes-1] >>= restbits; // we zeropad on the left side, by shifting to the right since bits are random and not yet used
     }
 
     BitString result;// initiate a result variable
