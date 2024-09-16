@@ -12,7 +12,7 @@ struct BitString {
     uint8_t *data; // Declare an attribute called data to store the Pointer to the bitstring(our data)
 };
 
-BitString alloc_bit_string(int L) {
+struct BitString alloc_bit_string(int L) {
     // Allocate memory for the bitstring
     int nbytes= (L+7)/8; //  normal division rounds down, we want up, hence the +7
     int restbits = nbytes*8 - L;
@@ -27,13 +27,13 @@ BitString alloc_bit_string(int L) {
         data[nbytes-1] >>= restbits; // we zeropad on the left side, by shifting to the right since bits are random and not yet used
     }
 
-    BitString result;// initiate a result variable
+    struct BitString result;// initiate a result variable
     result.data = data; // store the data in the data attribute of result
     result.length = nbytes; // store the number of bytes data consists of, in the length attribute of result
     return result;
 }
 
-void print_bitstring(BitString b) {
+void print_bitstring(struct BitString b) {
     for(int i = b.length-1; i >=0; --i) {
         for(int j = 7; j >= 0; --j) {
             printf("%d", (b.data[i] >> j) & 1); //first print the most significant bit, by shifting 7 to the right, then

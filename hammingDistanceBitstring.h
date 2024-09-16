@@ -22,7 +22,7 @@ strings. */
 
 
 // this function will calculate the hemming distance between 2 integers
-int HamDist2Strings(BitString a, BitString b) {
+int HamDist2Strings(struct BitString a, struct BitString b) {
     int i=0;
     int result=0;
     while (i<a.length){
@@ -31,9 +31,9 @@ int HamDist2Strings(BitString a, BitString b) {
         }
         i=i+1;
     };
-    print_bitstring(a);
-    print_bitstring(b);
-    printf("and the hamming distance between those two bitstrings is: %d\n", result);
+    // print_bitstring(a);
+    // print_bitstring(b);
+    // printf("and the hamming distance between those two bitstrings is: %d\n", result);
     return result;  
 
 }
@@ -42,7 +42,7 @@ int TotalHamDistNLbitstrings(int nBitstrings, int lenghtBitstring){
     int totalHamDist=0;
     // BitString *arrbitstring = (BitString *)malloc(nStrings);
 
-    BitString arrbitstrings[nBitstrings];
+    struct BitString arrbitstrings[nBitstrings];
     int i=0;
     while (i<nBitstrings){
         arrbitstrings[i]= alloc_bit_string(lenghtBitstring);
@@ -57,12 +57,15 @@ int TotalHamDistNLbitstrings(int nBitstrings, int lenghtBitstring){
             totalHamDist=totalHamDist+difference;
     }
     }
-    printf("totalhamming distance: %d", totalHamDist);
+    printf("The total hamming distance is: %d \n", totalHamDist);
     return totalHamDist;
 }
 
 float AverageHamDist(int totalHamDist, int nBitstring){
-    return totalHamDist/(float)nBitstring;
+    float result=  totalHamDist/(float)(nBitstring*(nBitstring+1));
+    printf("The average hamming distance is: %f \n",  result);
+
+    return result;
 }
 
 
@@ -71,8 +74,8 @@ struct UserInput{
     int nStrings, stringLength, seed;
 };
 
-UserInput askInput() {
-    UserInput resultingSettings;
+struct UserInput askInput() {
+    struct UserInput resultingSettings;
     printf("How many strings should be generated?");
     scanf("%d", &resultingSettings.nStrings);
     printf("How long should the strings be?");
@@ -81,17 +84,4 @@ UserInput askInput() {
     scanf("%d", &resultingSettings.seed);
     printf("Input values were: number of strings = %d, of length = %d, with seed = %d.",resultingSettings.nStrings,resultingSettings.stringLength, resultingSettings.seed);
     return resultingSettings;
-}
-
-
-
-int main() {
-    UserInput settings= askInput();
-    srand(settings.seed);
-    printf("Test the calculation of hamming distance of two bitstrings:\n");
-    int testTotalHam = HamDist2Strings(alloc_bit_string(settings.stringLength), alloc_bit_string(settings.stringLength));
-    float averageHamDistance= AverageHamDist(testTotalHam, settings.nStrings);
-    printf("average hamming distance testcase: %f ", averageHamDistance);
-    printf("Test the Total hamming distance calculation of N bitstrings, each of lenght L\n");
-    TotalHamDistNLbitstrings(settings.nStrings, settings.stringLength);
 }
