@@ -20,7 +20,6 @@ for (int i = oursize-1; i >= 0; i--){
     return 0;
 }
 }
-
 int main(){
 
     int arr[5] = {1,3,4,2,5};
