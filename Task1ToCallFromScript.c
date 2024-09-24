@@ -2,8 +2,8 @@
 
 int main(int argc, char *argv[]) {
     if(argc !=4 ) {
-        printf("missing arguments\n");
-        printf("syntax: ./Task1Bitstrings nStrings stringLength seed\n");
+        printf("missing arguments, Note that you have to run it from the terminal\n");
+        printf("syntax: ./Task1ToCallFromScript nStrings stringLength seed\n");
         return 1;
     }
 
