@@ -6,6 +6,10 @@
 // We use *, a pointer to indicate where 0 or more bools are stored. If we were to work with a fixed lenght, we could use an
 // array, but due to varying lenghts of bitstrings, we need the pointer.
 
+/* We store our bitstrings as array of bytes, so they can be longer than eg, 32-bits (int).
+Restriction on number of strings and lenght, is the amount of memory we can allocate for the execution of any such program.
+*/
+
 //Define a custom type to store the bitstring and its length
 struct BitString {
     int length; // declare an attribute called length, to store the number of bytes in data, assuming the lenght of the 
