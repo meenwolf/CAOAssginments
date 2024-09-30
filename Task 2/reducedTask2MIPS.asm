@@ -49,9 +49,9 @@ _start:
 	# jump to next part to define bitstrings
 	li		$s5, 0 # here we will store the total hamming distance
 	li 		$s6, 0 # here we will store the average hamming distance
-	j defineBitstring
+	j AskUserInput
 
-defineBitstring:
+AskUserInput:
 	#Ask the user to enter the bitstring
 	la		$a0,askBitstring		# Load the address of the question to enter the bitstring
 	li		$v0,4                 # Initiate that we want to print a string
@@ -102,42 +102,42 @@ defineBitstring:
 	
 	#jump to the next part when all bitstrings are defined
 	li		$t2, $Nstrings #to branch based on the number of strings after saving these strings we use if for smt else
-	beq 	$s0, $t2, pairStrings
+	beq 	$s0, $t2, CalcTotalHamm
 	#if we did not take the branch, we have to ask the user again for a bitstring,so go back to the top
 	# after incrementing s0
 	addi 	$s0, $s0, $One
-	j defineBitstring
+	j AskUserInput
 	
 
   
-pairStrings:
+CalcTotalHamm:
 	# loop over strings and calc hamming distance (part of Guusje and Elise needs to be combined here)
 	#Use s0 to keep track of the counter of the first bitstring we want to compare
 	#Use s1 keep track of the counter of the second bitstring we want to compare each loop
 	li 		$s0, -1
-	j increaseFirst
+	j SelectFirstToCompare
 	
-	increaseFirst:
+	SelectFirstToCompare:
 		li		$t5, 1
 		add 	$s0, $s0, $t5
 		li 		$t0, $Nstrings
 		li		$t5, -1
 		add 	$t0, $t0, $t5
-		beq 	$s0, $t0, doneLooping
+		beq 	$s0, $t0, DoneSoPrintResults
 		#If we haven't reached the last bit yet, jump to select second
 		li		$t5, 0
 		add 	$s1, $s0,$t5
-		j selectSecond
+		j SelectSecondToCompare
 
-		selectSecond:
+		SelectSecondToCompare:
 			#select the second bitstring to compare
 			li		$t5,1
 			add 	$s1, $s1, $t5
-			beq 	$s1, $Nstrings, increaseFirst
+			beq 	$s1, $Nstrings, SelectFirstToCompare
 			#If we don't branch, meaning that we have two different strings we want to compare, we want to calc the hamm dist
-			j calcAddressesHam
+			j CalcHammPair
 			
-calcAddressesHam:
+CalcHammPair:
 	#first update the counter of comared pairs:
 	li		$t5, 1
 	add 	$s7, $s7, $t5
@@ -157,23 +157,23 @@ calcAddressesHam:
 	#Now the address of bitstring1 is in s2, and the address of bitstring2 is in s3
 	#Use these to calculate the hamming distance
 	li 		$t6, 0 # this is a counter for the string size
-	loopOverBytes:
-		beq		$t6, $Nbits, selectSecond
+	LoopOverBytes:
+		beq		$t6, $Nbits, SelectSecondToCompare
 		add		$t3, $s2, $t6
 		add		$t4, $s3, $t6
 		lb		$t7, 0($t3)
 		lb		$t8, 0($t4)
-		beq		$t7, $t8, dontAdd
+		beq		$t7, $t8, DontAdd
 		li		$t5, 1
 		add		$s5, $s5, $t5
-		dontAdd:
+		DontAdd:
 		li		$t5, 1
 		add 	$t6, $t6, $t5
-		j loopOverBytes
+		j		LoopOverBytes
 
 
 
-doneLooping:
+DoneSoPrintResults:
 	#code to run after we have looped over all possible pairs and summed up the hamming distances
 	
 	# Print the total hamming distance
@@ -220,8 +220,8 @@ doneLooping:
 	syscall
 	
 	#End the simulation part
-	j exit
+	j Exit
 
-exit:
+Exit:
     li		$v0, 10
     syscall
