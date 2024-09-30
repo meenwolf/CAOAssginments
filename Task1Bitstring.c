@@ -5,6 +5,11 @@
 #include <stdint.h>
 // We use *, a pointer to indicate where 0 or more bools are stored. If we were to work with a fixed lenght, we could use an
 // array, but due to varying lenghts of bitstrings, we need the pointer.
+
+/* We store our bitstrings as array of bytes, so they can be longer than eg, 32-bits (int).
+Restriction on number of strings and lenght, is the amount of memory we can allocate for the execution of any such program.
+*/
+
 //Define a custom type to store the bitstring and its length
 struct BitString {
     int length; // declare an attribute called length, to store the number of bytes in data, assuming the lenght of the 
@@ -12,6 +17,10 @@ struct BitString {
     uint8_t *data; // Declare an attribute called data to store the Pointer to the bitstring(our data)
 };
 
+/*
+Allocate memory for the bitstring, generate the bitstring and save it in the allocated memory.
+Int L is the length of the bitstring. Returns the BitString that was generated and saved.
+*/
 struct BitString alloc_bit_string(int L) {
     // Allocate memory for the bitstring
     int nbytes= (L+7)/8; //  normal division rounds down, we want up, hence the +7
@@ -33,6 +42,9 @@ struct BitString alloc_bit_string(int L) {
     return result;
 }
 
+/*
+Print function for structure BitString we made. Used for seeing feedback while testing our other functions.
+*/
 void print_bitstring(struct BitString b) {
     for(int i = b.length-1; i >=0; --i) {
         for(int j = 7; j >= 0; --j) {
@@ -43,7 +55,7 @@ void print_bitstring(struct BitString b) {
     printf("\n");
 }
 
-// this function will calculate the hemming distance between 2 integers
+// this function will calculate the hamming distance between 2 bitstrings a and b
 int HamDist2Strings(struct BitString a, struct BitString b) {
     int i=0;
     int result=0;
@@ -60,6 +72,11 @@ int HamDist2Strings(struct BitString a, struct BitString b) {
 
 }
 
+/*
+Takes the number of bitstrings that should be generated and their desired length.
+It generates (and saves) the bitstrings, and calculates the total hamming distance for all possible combinations.
+The total hamming distance will be returned.
+*/
 int TotalHamDistNLbitstrings(int nBitstrings, int lenghtBitstring){
     int totalHamDist=0;
     // BitString *arrbitstring = (BitString *)malloc(nStrings);
@@ -83,6 +100,8 @@ int TotalHamDistNLbitstrings(int nBitstrings, int lenghtBitstring){
     return totalHamDist;
 }
 
+/*
+Takes the total hamming distance and the number of bitstrings and returns the average hamming distance.*/
 float AverageHamDist(int totalHamDist, int nBitstring){
     float result=  totalHamDist/(float)(nBitstring*(nBitstring-1));
     printf("The average hamming distance is: %f \n",  result);
@@ -90,7 +109,10 @@ float AverageHamDist(int totalHamDist, int nBitstring){
     return result;
 }
 
-
+/*
+Main function: takes the arguments for number of strings, length of the strings, and seed.
+It prints the total hamming distance and average distrance.
+*/
 int main(int argc, char *argv[]) {
     if(argc !=4 ) {
         printf("missing arguments, Note that you have to run it from the terminal\n");
